@@ -104,8 +104,8 @@ class Event(models.Model):
     inserted = models.DateField(default=datetime.now())
     name = models.CharField(max_length=60)
     place = models.ForeignKey(Place)
-    date_start = models.DateField()
-    date_end = models.DateField(null=True, blank=True)
+    date_start = models.DateTimeField()
+    date_end = models.DateTimeField(null=True, blank=True)
     repeatable = models.BooleanField()
     duratation = models.IntegerField(null=True, blank=True)
     subject = models.ForeignKey(Subject)
@@ -124,7 +124,7 @@ class Student(models.Model):
     def __unicode__(self):
         return self.name
 
-class Comment(models.Model):
+class Comment(models.Model):    
     from_user = models.ForeignKey(Student)
     event = models.ForeignKey(Event)
     start_date = models.DateField()
