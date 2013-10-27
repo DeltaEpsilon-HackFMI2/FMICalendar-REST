@@ -1,14 +1,15 @@
 from django.conf.urls import patterns, include, url
 
 # Uncomment the next two lines to enable the admin:
-# from django.contrib import admin
-# admin.autodiscover()
+from django.contrib import admin
+admin.autodiscover()
 
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browseable API.
 urlpatterns = patterns('',
     url(r'^rest-api/', include('schedule.urls')),
+    url(r'^admin/', include(admin.site.urls)),
 )
 
 # urlpatterns = patterns('',

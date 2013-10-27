@@ -7,12 +7,30 @@ def menu_map(request):
     Get object representing the filtering interface.
     """
     all_programs = HierarchyUnit.objects.filter(type_value=HierarchyUnit.PROGRAM)
-    programs_map = {}
+    programs_map = {HierarchyUnit.TYPES[0][1]:}
+
+    result = {u'Заявка':programs_map}
     for program in all_programs:
-        years = program.childs
+        year_set = program.get_all_childs()
+        for year in year_set:
+            group_set = year.get_all_childs()        
+
+
+
+
+
+
+
+
+
+
+
+
+    for program in all_programs:
+        years = program.parent
         years_map = {}
         for year in years:
-            groups = years.childs
+            groups = years.parent
             groups_map = {}
             for group in groups:
                 groups_map[group.name] = {}
@@ -25,7 +43,7 @@ def by_group_id(request, group_id):
     """
     Get all events connected to some studying group.
     """
-    pass
+    
 
 
 def by_teacher_id(request, teacher_id):
