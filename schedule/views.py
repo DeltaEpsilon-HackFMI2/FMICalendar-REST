@@ -1,3 +1,6 @@
+# coding: utf-8
+from django.http import HttpResponse
+
 from schedule.models import HierarchyUnit
 from rest_framework.renderers import JSONRenderer
 
@@ -7,36 +10,15 @@ def menu_map(request):
     Get object representing the filtering interface.
     """
     all_programs = HierarchyUnit.objects.filter(type_value=HierarchyUnit.PROGRAM)
-    programs_map = {HierarchyUnit.TYPES[0][1]:}
-
-    result = {u'Заявка':programs_map}
+    programs_map = {}
     for program in all_programs:
-        year_set = program.get_all_childs()
-        for year in year_set:
-            group_set = year.get_all_childs()        
+        programs_map[program.value] = {}
+        for year in program.get_all_childs():
+            programs_map[program.value][year.value] = []
+            for group in year.get_all_childs():
+                programs_map[program.value][year.value].append(group.value)
 
-
-
-
-
-
-
-
-
-
-
-
-    for program in all_programs:
-        years = program.parent
-        years_map = {}
-        for year in years:
-            groups = years.parent
-            groups_map = {}
-            for group in groups:
-                groups_map[group.name] = {}
-            years_map[HierarchyUnit[2][1]] = groups_map
-        programs_map[HierarchyUnit[1][1]] = years_map
-    JSONRenderer().render({HierarchyUnit[0][1]: programs_map})
+    return HttpResponse(JSONRenderer().render({str('test'): programs_map}))
 
 
 def by_group_id(request, group_id):

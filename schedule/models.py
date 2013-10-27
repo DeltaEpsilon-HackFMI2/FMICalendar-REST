@@ -17,9 +17,9 @@ class Place(models.Model):
 
 
 class HierarchyUnit(models.Model):
-    PROGRAM = u'PR'
-    YEAR = u'YR'
-    GROUP = u'GR'
+    PROGRAM = 'PR'
+    YEAR = 'YR'
+    GROUP = 'GR'
     TYPES = (
         (PROGRAM, u"Специалност"),
         (YEAR, u"Курс"),
@@ -54,8 +54,8 @@ class Subject(models.Model):
     Representation of all subjects.
     Example: Calculus 1.
     """
-    MANDATORY = u'MN'
-    OPTIONAL = u'OP'
+    MANDATORY = 'MN'
+    OPTIONAL = 'OP'
     TYPES = (
         (MANDATORY, u"Задължителен"),
         (OPTIONAL, u"Избираем"),
@@ -95,7 +95,7 @@ class Teacher(models.Model):
 
 
 class Event(models.Model):
-    WEEKLY = u'WKL'
+    WEEKLY = 'WKL'
     TYPES = (
         (WEEKLY, u'Седмично'),
     )
