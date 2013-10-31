@@ -25,7 +25,17 @@ def by_group_id(request, group_id):
     """
     Get all events connected to some studying group.
     """
-    
+    response_data={}
+    all_events = []
+    all_subjects = Subject.objects.filter(group=HierarchyUnit.objects.get(id=group_id))
+    for sub in all_subjects:
+        all_events.append(Event.objects.filter(subject=sub)[0])
+
+
+    for ev in all_events:
+        response_data[ev.name] = {'start': ev.date_start, 'end': ev.date_end, 'teacher':ev.teacher.name}
+
+    return HttpResponse(JSONRenderer().render({str('Begin'): response_data}))
 
 
 def by_teacher_id(request, teacher_id):
@@ -48,6 +58,22 @@ def by_block_id(request, block_id):
     """
     pass
 
+def by_student_fn(request, fn):
+    """
+    Get all the optional courses from some student.
+    """
+    response_data = {}
+    all_events = []
+    for ev in Event.objects.all():
+        if ev in Student.objects.filter(fac_number=fn)[0].events.all():
+            all_events.append(ev)
+
+
+    for ev in all_events:
+        response_data[ev.name] = {'start': ev.date_start, 'end': ev.date_end, 'teacher':ev.teacher.name}
+
+    return HttpResponse(JSONRenderer().render({str('Begin'): response_data}))
+
 def send_file(request):
     from icalendar import Calendar, Event as Ev
     from datetime import datetime
@@ -64,10 +90,8 @@ def send_file(request):
         event = Ev()
         event.add('summary',ev.subject.name)
         event.add('dtstart',ev.date_start)
-        event.add('dtend', datetime(ev.date_start.year,ev.date_start.month,ev.date_start.day,ev.date_start.hour+ev.duratation,ev.date_start.minute))
-        event.add('dtstamp',datetime.now())
-        # event.add('rrule','FREQ=WEEKLY;UNTIL='+str(ev.date_end.year)+str(ev.date_end.month)+str(ev.date_end.day)+'T'+str(ev.date_end.hour)+str(ev.date_end.minute)+str(ev.date_end.second))
-        # event.add('rrule','FREQ=WEEKLY;UNTIL=20140215T000000Z')
+        event.add('dtend', ev.date_end)
+        event.add('dtstamp',datetime.now())        
         event['uid']=ev.subject.name+'/'+str(i)
         i = i+1
         cal.add_component(event)

@@ -105,10 +105,10 @@ class Event(models.Model):
     name = models.CharField(max_length=60)
     place = models.ForeignKey(Place)
     date_start = models.DateTimeField()
-    date_end = models.DateTimeField(null=True, blank=True)
+    date_end = models.DateTimeField(default=datetime.now())
     repeatable = models.BooleanField()
     duratation = models.IntegerField(null=True, blank=True)
-    subject = models.ForeignKey(Subject)
+    subject = models.ForeignKey(Subject, blank=True, null=True)
     teacher = models.ForeignKey(Teacher)
 
     def __unicode__(self):
@@ -118,8 +118,8 @@ class Student(models.Model):
     name = models.CharField(max_length=30)
     fac_number = models.CharField(max_length=30)
     email = models.CharField(max_length=30)
-    group = models.ForeignKey(HierarchyUnit)
-    subjects = models.ManyToManyField(Subject)
+    group = models.ForeignKey(HierarchyUnit, limit_choices_to={'type_value': HierarchyUnit.GROUP})
+    events = models.ManyToManyField(Event, blank=True, null=True)
 
     def __unicode__(self):
         return self.name
