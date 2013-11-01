@@ -10,6 +10,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
     url(r'^rest-api/', include('schedule.urls')),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^',include(admin.site.urls)),
 )
 
 # urlpatterns = patterns('',
