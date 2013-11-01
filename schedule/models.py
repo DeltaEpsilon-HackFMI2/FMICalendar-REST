@@ -115,7 +115,10 @@ class Event(models.Model):
         return self.name
 
 class Student(models.Model):
+
+    PROGRAM = (('BK', 'Бакалавър'),('MG', 'Магистър'))
     name = models.CharField(max_length=255)
+    program = models.CharField(max_length=255,choices=PROGRAM)
     fac_number = models.CharField(max_length=255)
     email = models.CharField(max_length=255)
     group = models.ForeignKey(HierarchyUnit, limit_choices_to={'type_value': HierarchyUnit.GROUP}, blank=True, null=True)
