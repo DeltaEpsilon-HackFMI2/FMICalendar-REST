@@ -34,7 +34,7 @@ class HierarchyUnit(models.Model):
         return HierarchyUnit.objects.filter(parent=self)
 
     def __unicode__(self):
-        if self.parent.value is not "":
+        if self.parent is not None:
             return self.value+'-'+self.parent.value
         else:
             return self.value
@@ -121,7 +121,7 @@ class Student(models.Model):
 
     PROGRAM = (('BK', 'Бакалавър'),('MG', 'Магистър'))
     name = models.CharField(max_length=255)
-    program = models.CharField(max_length=255,choices=PROGRAM, blank=True, default=PROGRAM[0][0])
+    program = models.CharField(max_length=255,choices=PROGRAM, blank=True, default=Student.PROGRAM[0][0])
     fac_number = models.CharField(max_length=255)
     email = models.CharField(max_length=255)
     group = models.ForeignKey(HierarchyUnit, limit_choices_to={'type_value': HierarchyUnit.GROUP}, blank=True, default=None, null=True)
