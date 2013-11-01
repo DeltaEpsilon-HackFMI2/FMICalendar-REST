@@ -67,7 +67,7 @@ class Subject(models.Model):
     type_value = models.CharField(max_length=255, choices=TYPES)
     name = models.CharField(max_length=255)
     block = models.ForeignKey(Block, null=True, blank=True, default=None)
-    group = models.ForeignKey(HierarchyUnit, null=True, blank=True, default=None, limit_choices_to={'type_value': HierarchyUnit.GROUP})
+    year = models.ForeignKey(HierarchyUnit, null=True, blank=True, default=None, limit_choices_to={'type_value': HierarchyUnit.YEAR})
 
     def __unicode__(self):
         return self.name
