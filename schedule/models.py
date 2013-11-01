@@ -76,7 +76,7 @@ class Subject(models.Model):
 
 
     def get_year_value(self):
-        return self.year.value
+        return ', '.join([self.year.parent.value, self.year.value+u' курс'])
 
     def __unicode__(self):
         return self.name
