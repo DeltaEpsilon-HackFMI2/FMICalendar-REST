@@ -28,7 +28,7 @@ class HierarchyUnit(models.Model):
 
     type_value = models.CharField(max_length=255, choices=TYPES)
     value = models.CharField(max_length=255)
-    parent = models.ForeignKey("schedule.HierarchyUnit", null=True, blank=True, default=None)
+    parent = models.ForeignKey("schedule.HierarchyUnit", null=True, blank=True, on_delete=models.SET_NULL, default=None)
 
     def get_all_childs(self):
         return HierarchyUnit.objects.filter(parent=self)
@@ -63,8 +63,8 @@ class Subject(models.Model):
 
     type_value = models.CharField(max_length=255, choices=TYPES)
     name = models.CharField(max_length=255)
-    block = models.ForeignKey(Block, null=True, blank=True, default=None)
-    group = models.ForeignKey(HierarchyUnit, null=True, blank=True, default=None, limit_choices_to={'type_value': HierarchyUnit.GROUP})
+    block = models.ForeignKey(Block, null=True, blank=True, on_delete=models.SET_NULL, default=None)
+    group = models.ForeignKey(HierarchyUnit, null=True, blank=True, on_delete=models.SET_NULL, default=None, limit_choices_to={'type_value': HierarchyUnit.GROUP})
 
     def __unicode__(self):
         return self.name
@@ -87,8 +87,8 @@ class Teacher(models.Model):
     email = models.CharField(max_length=255)
     full_name = models.CharField(max_length=255)
     position = models.CharField(max_length=255)
-    subjects = models.ManyToManyField(Subject, null=True, blank=True, default=None)
-    department = models.ForeignKey(Department, null=True, blank=True, default=None)
+    subjects = models.ManyToManyField(Subject, null=True, blank=True, on_delete=models.SET_NULL, default=None)
+    department = models.ForeignKey(Department, null=True, blank=True, on_delete=models.SET_NULL, default=None)
 
     def __unicode__(self):
         return self.name
@@ -100,16 +100,16 @@ class Event(models.Model):
         (WEEKLY, u'Седмично'),
     )
 
-    type_value = models.CharField(max_length=255, null=True, blank=True, default=None)
+    type_value = models.CharField(max_length=255, null=True, blank=True, on_delete=models.SET_NULL, default=None)
     inserted = models.DateField(default=datetime.now())
     name = models.CharField(max_length=255)
-    place = models.ForeignKey(Place, blank=True, default=None, null=True)
+    place = models.ForeignKey(Place, blank=True, on_delete=models.SET_NULL, default=None, null=True)
     date_start = models.DateTimeField()
     date_end = models.DateTimeField(default=datetime.now())
     repeatable = models.BooleanField()
     duratation = models.IntegerField()
-    subject = models.ForeignKey(Subject, blank=True, default=None, null=True)
-    teacher = models.ForeignKey(Teacher, blank=True, default=None, null=True)
+    subject = models.ForeignKey(Subject, blank=True, on_delete=models.SET_NULL, default=None, null=True)
+    teacher = models.ForeignKey(Teacher, blank=True, on_delete=models.SET_NULL, default=None, null=True)
 
     def __unicode__(self):
         return self.name
@@ -121,15 +121,15 @@ class Student(models.Model):
     program = models.CharField(max_length=255,choices=PROGRAM)
     fac_number = models.CharField(max_length=255)
     email = models.CharField(max_length=255)
-    group = models.ForeignKey(HierarchyUnit, limit_choices_to={'type_value': HierarchyUnit.GROUP}, blank=True, default=None, null=True)
-    events = models.ManyToManyField(Event, blank=True, default=None, null=True)
+    group = models.ForeignKey(HierarchyUnit, limit_choices_to={'type_value': HierarchyUnit.GROUP}, blank=True, on_delete=models.SET_NULL, default=None, null=True)
+    events = models.ManyToManyField(Event, blank=True, on_delete=models.SET_NULL, default=None, null=True)
 
     def __unicode__(self):
         return self.name
 
 class Comment(models.Model):    
-    from_user = models.ForeignKey(Student, blank=True, default=None, null=True)
-    event = models.ForeignKey(Event, blank=True, default=None, null=True)
+    from_user = models.ForeignKey(Student, blank=True, on_delete=models.SET_NULL, default=None, null=True)
+    event = models.ForeignKey(Event, blank=True, on_delete=models.SET_NULL, default=None, null=True)
     start_date = models.DateField()
     end_date = models.DateField()
     dtstamp = models.DateField(default=datetime.now())
