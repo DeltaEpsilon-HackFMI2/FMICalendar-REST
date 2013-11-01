@@ -24,6 +24,10 @@ class EventAdmin(admin.ModelAdmin):
     list_display = ('name', 'id')
    
 class StudentAdmin(admin.ModelAdmin):
+
+	def get_year_value(self, instance):
+		return instance.year.value
+		
     list_display = ('name', 'get_year_value', 'id')
     
 class CommentAdmin(admin.ModelAdmin):
