@@ -27,7 +27,7 @@ class StudentAdmin(admin.ModelAdmin):
     list_display = ('name', 'id')
     
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ('id')
+    list_display = ('id',)
 
 admin.site.register(Place,PlaceAdmin)
 admin.site.register(HierarchyUnit,HierarchyUnitAdmin)
