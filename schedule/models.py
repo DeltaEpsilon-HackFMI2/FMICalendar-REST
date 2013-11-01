@@ -42,10 +42,7 @@ class HierarchyUnit(models.Model):
         return HierarchyUnit.objects.filter(parent=self)
 
     def __unicode__(self):
-        if self.parent is not None:
-            return self.value+'-'+self.parent.value
-        else:
-            return self.value
+        return self.get_all_info_for_parents()
 
 
 
