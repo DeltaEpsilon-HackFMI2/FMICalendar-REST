@@ -32,7 +32,7 @@ class HierarchyUnit(models.Model):
 
     def get_all_info_for_parents(self):
         if self.type_value == 'PR':
-            return ''
+            return self.value
         if self.type_value == 'YR':
             return ', '.join([self.parent.value, self.value+u' курс'])
         else:
