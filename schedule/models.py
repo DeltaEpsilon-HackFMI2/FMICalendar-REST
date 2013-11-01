@@ -87,7 +87,7 @@ class Teacher(models.Model):
     email = models.CharField(max_length=255)
     full_name = models.CharField(max_length=255)
     position = models.CharField(max_length=255)
-    subjects = models.ManyToManyField(Subject)
+    subjects = models.ManyToManyField(Subject, null=True, blank=True)
     department = models.ForeignKey(Department)
 
     def __unicode__(self):

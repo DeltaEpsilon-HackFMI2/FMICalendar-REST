@@ -1,24 +1,14 @@
-teachers_list = []
-teachers_list_al = []
+from schedule.models import *
+import json
 
-TEACHER_TAG = "teacherName"
-TEACHER_TAG_AL = "teacher"
+json_data = open('C:\\Users\\simeon.COMSOFTL\\Desktop\\HackFMI-backend\\FMICalendar-REST\\FMI-Data-master\\teachers.json','rb')
 
-teachers = open('FMI-Data/teachers.json','r')
-teachers_al = open('FMI-Data/program_cs.json','r')
+data = json.load(json_data)
 
-for line in teachers:
-	if TEACHER_TAG in line:
-		a = line.strip()[16:-2].split(" ")
-		teachers_list.append(a[0][0:2]+'.'+a[-1])
+departmentsMap={'Àëã': 1, 'ÀÌ':2, 'ÂÎÈÑ':3, 'Ãåîì':4, 'ÄÓ':5, 'ÈÑ':6, 'ÈÒ':7, 'ÊÀÒ':8, 'ÊÈ':9, 'ÌËÏ':10, 'ÌÀ':11, 'ÎÌÈ':12, 'ÑÒ':13, '×ÌÀ':14, 'ËÌÌÈ~~':15}
 
-
-for line in teachers_al:
-	if TEACHER_TAG_AL in line:
-		a = line.strip()[12:]
-		a = line.strip()[16:-2].split(" ")
-		teachers_list.append(a[0][0:2]+'.'+a[-1])
-
-
-for a in teachers_list:
-	print a
+for x in data:
+    try:
+        t = Teacher(id=x['teacherId'], name=x['teacherName'], title=x['teacherTitle'], email=x['teacherEmail'])
+    except UnicodeEncodeError:
+        continue
