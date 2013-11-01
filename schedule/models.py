@@ -88,7 +88,7 @@ class Teacher(models.Model):
     full_name = models.CharField(max_length=255)
     position = models.CharField(max_length=255)
     subjects = models.ManyToManyField(Subject, null=True, blank=True)
-    department = models.ForeignKey(Department)
+    department = models.ForeignKey(Department, null=True, blank=True)
 
     def __unicode__(self):
         return self.name
@@ -103,13 +103,13 @@ class Event(models.Model):
     type_value = models.CharField(max_length=255, null=True, blank=True)
     inserted = models.DateField(default=datetime.now())
     name = models.CharField(max_length=255)
-    place = models.ForeignKey(Place)
+    place = models.ForeignKey(Place, blank=True, null=True)
     date_start = models.DateTimeField()
     date_end = models.DateTimeField(default=datetime.now())
     repeatable = models.BooleanField()
     duratation = models.IntegerField(null=True, blank=True)
     subject = models.ForeignKey(Subject, blank=True, null=True)
-    teacher = models.ForeignKey(Teacher)
+    teacher = models.ForeignKey(Teacher, blank=True, null=True)
 
     def __unicode__(self):
         return self.name
@@ -118,15 +118,15 @@ class Student(models.Model):
     name = models.CharField(max_length=255)
     fac_number = models.CharField(max_length=255)
     email = models.CharField(max_length=255)
-    group = models.ForeignKey(HierarchyUnit, limit_choices_to={'type_value': HierarchyUnit.GROUP})
+    group = models.ForeignKey(HierarchyUnit, limit_choices_to={'type_value': HierarchyUnit.GROUP}, blank=True, null=True)
     events = models.ManyToManyField(Event, blank=True, null=True)
 
     def __unicode__(self):
         return self.name
 
 class Comment(models.Model):    
-    from_user = models.ForeignKey(Student)
-    event = models.ForeignKey(Event)
+    from_user = models.ForeignKey(Student, blank=True, null=True)
+    event = models.ForeignKey(Event, blank=True, null=True)
     start_date = models.DateField()
     end_date = models.DateField()
     dtstamp = models.DateField(default=datetime.now())
