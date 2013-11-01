@@ -34,9 +34,9 @@ class HierarchyUnit(models.Model):
         if self.type_value == 'PR':
             return ''
         if self.type_value == 'YR':
-            return ', '.join([self.parent.value, self.value])
+            return ', '.join([self.parent.value, self.value+u' курс'])
         else:
-            return ', '.join([self.parent.parent.value, self.parent.value, self.value])
+            return ', '.join([self.parent.parent.value, self.parent.value+u' курс', self.value+u' група'])
 
     def get_all_childs(self):
         return HierarchyUnit.objects.filter(parent=self)
