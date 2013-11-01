@@ -5,10 +5,11 @@ json_data = open('C:\\Users\\simeon.COMSOFTL\\Desktop\\HackFMI-backend\\FMICalen
 
 data = json.load(json_data)
 
-departmentsMap={'Àëã': 1, 'ÀÌ':2, 'ÂÎÈÑ':3, 'Ãåîì':4, 'ÄÓ':5, 'ÈÑ':6, 'ÈÒ':7, 'ÊÀÒ':8, 'ÊÈ':9, 'ÌËÏ':10, 'ÌÀ':11, 'ÎÌÈ':12, 'ÑÒ':13, '×ÌÀ':14, 'ËÌÌÈ~~':15, 'Íåîïğ':16}
+departmentsMap={u'Àëã': 1, u'ÀÌ':2, u'ÂÎÈÑ':3, u'Ãåîì':4, u'ÄÓ':5, u'ÈÑ':6, u'ÈÒ':7, u'ÊÀÒ':8, u'ÊÈ':9, u'ÌËÏ':10, u'ÌÀ':11, u'ÎÌÈ':12, u'ÑÒ':13, u'×ÌÀ':14, u'ËÌÌÈ~~':15, u'Íåîïğ':16}
 
 for x in data:
     try:
         t = Teacher(id=x['teacherId'], name=x['teacherName'], title=x['teacherTitle'], email=x['teacherEmail'], position=x['teacherPosition'], department=Department.objects.get(id=departmentsMap[x['department']]))
     except UnicodeEncodeError:
         continue
+        
