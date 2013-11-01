@@ -9,7 +9,7 @@ class Place(models.Model):
     Holder object for basic info about the rooms
     in the university.
     """
-    room_place = models.CharField(max_length=10)
+    room_place = models.CharField(max_length=255)
     floor = models.IntegerField()
 
     def __unicode__(self):
@@ -26,8 +26,8 @@ class HierarchyUnit(models.Model):
         (GROUP, u"Група"),
     )
 
-    type_value = models.CharField(max_length=10, choices=TYPES)
-    value = models.CharField(max_length=50)
+    type_value = models.CharField(max_length=255, choices=TYPES)
+    value = models.CharField(max_length=255)
     parent = models.ForeignKey("schedule.HierarchyUnit", null=True, blank=True)
 
     def get_all_childs(self):
@@ -43,7 +43,7 @@ class Block(models.Model):
     Group representing a set of optional subjects.
     Example: Core of Computer Science.
     """
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=255)
 
     def __unicode__(self):
         return self.name
@@ -61,8 +61,8 @@ class Subject(models.Model):
         (OPTIONAL, u"Избираем"),
     )
 
-    type_value = models.CharField(max_length=12, choices=TYPES)
-    name = models.CharField(max_length=60)
+    type_value = models.CharField(max_length=255, choices=TYPES)
+    name = models.CharField(max_length=255)
     block = models.ForeignKey(Block, null=True, blank=True)
     group = models.ForeignKey(HierarchyUnit, null=True, blank=True, limit_choices_to={'type_value': HierarchyUnit.GROUP})
 
@@ -75,18 +75,18 @@ class Department(models.Model):
     Group representing a set of lecturers
     grouped by field of teaching.
     """
-    name = models.CharField(max_length=30)
+    name = models.CharField(max_length=255)
 
     def __unicode__(self):
         return self.name
 
 
 class Teacher(models.Model):
-    name = models.CharField(max_length=30)
-    title = models.CharField(max_length=30)
-    email = models.CharField(max_length=30)
-    full_name = models.CharField(max_length=50)
-    position = models.CharField(max_length=30)
+    name = models.CharField(max_length=255)
+    title = models.CharField(max_length=255)
+    email = models.CharField(max_length=255)
+    full_name = models.CharField(max_length=255)
+    position = models.CharField(max_length=255)
     subjects = models.ManyToManyField(Subject)
     department = models.ForeignKey(Department)
 
@@ -100,9 +100,9 @@ class Event(models.Model):
         (WEEKLY, u'Седмично'),
     )
 
-    type_value = models.CharField(max_length=30, null=True, blank=True)
+    type_value = models.CharField(max_length=255, null=True, blank=True)
     inserted = models.DateField(default=datetime.now())
-    name = models.CharField(max_length=60)
+    name = models.CharField(max_length=255)
     place = models.ForeignKey(Place)
     date_start = models.DateTimeField()
     date_end = models.DateTimeField(default=datetime.now())
@@ -115,9 +115,9 @@ class Event(models.Model):
         return self.name
 
 class Student(models.Model):
-    name = models.CharField(max_length=30)
-    fac_number = models.CharField(max_length=30)
-    email = models.CharField(max_length=30)
+    name = models.CharField(max_length=255)
+    fac_number = models.CharField(max_length=255)
+    email = models.CharField(max_length=255)
     group = models.ForeignKey(HierarchyUnit, limit_choices_to={'type_value': HierarchyUnit.GROUP})
     events = models.ManyToManyField(Event, blank=True, null=True)
 
