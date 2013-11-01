@@ -12,7 +12,7 @@ class BlockAdmin(admin.ModelAdmin):
     list_display = ('name', 'id')
     
 class SubjectAdmin(admin.ModelAdmin):
-    list_display = ('name', 'id')
+    list_display = ('name', 'get_year_value', 'id')
 
 class DepartmentAdmin(admin.ModelAdmin):
     list_display = ('name', 'id')
@@ -24,7 +24,7 @@ class EventAdmin(admin.ModelAdmin):
     list_display = ('name', 'id')
    
 class StudentAdmin(admin.ModelAdmin):
-	list_display = ('name', 'get_year_value', 'id')
+	list_display = ('name', 'id')
     
 class CommentAdmin(admin.ModelAdmin):
     list_display = ('id',)
