@@ -75,8 +75,8 @@ class Subject(models.Model):
     year = models.ForeignKey(HierarchyUnit, null=True, blank=True, default=None, limit_choices_to={'type_value': HierarchyUnit.YEAR})
 
 
-    # def get_year_value(self):
-    #     return self.year.value
+    def get_year_value(self):
+        return self.year.value
 
     def __unicode__(self):
         return self.name
