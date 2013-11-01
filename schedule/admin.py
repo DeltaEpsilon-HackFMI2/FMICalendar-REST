@@ -24,7 +24,7 @@ class EventAdmin(admin.ModelAdmin):
     list_display = ('name', 'id')
    
 class StudentAdmin(admin.ModelAdmin):
-    list_display = ('name', 'id')
+    list_display = ('name', 'year', 'id')
     
 class CommentAdmin(admin.ModelAdmin):
     list_display = ('id',)
