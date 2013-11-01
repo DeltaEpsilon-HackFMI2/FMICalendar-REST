@@ -30,6 +30,14 @@ class HierarchyUnit(models.Model):
     value = models.CharField(max_length=255)
     parent = models.ForeignKey("schedule.HierarchyUnit", null=True, blank=True, default=None)
 
+    def get_all_info_for_parents(self):
+        if self.type_value == 'PR':
+            return ''
+        if self.type_value == 'YR':
+            return ', '.join([self.parent.value, self.value])
+        else:
+            return ', '.join([self.parent.parent.value, self.parent.value, self.value])
+
     def get_all_childs(self):
         return HierarchyUnit.objects.filter(parent=self)
 

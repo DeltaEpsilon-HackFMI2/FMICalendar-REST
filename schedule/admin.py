@@ -6,7 +6,7 @@ class PlaceAdmin(admin.ModelAdmin):
     list_display = ('room_place', 'floor', 'id')
 
 class HierarchyUnitAdmin(admin.ModelAdmin):
-    list_display = ('value', 'type_value', 'id')
+    list_display = ('get_all_info_for_parents', 'type_value', 'id')
 
 class BlockAdmin(admin.ModelAdmin):
     list_display = ('name', 'id')
