@@ -107,7 +107,7 @@ class Event(models.Model):
     date_start = models.DateTimeField()
     date_end = models.DateTimeField(default=datetime.now())
     repeatable = models.BooleanField()
-    duratation = models.IntegerField(null=True, blank=True)
+    duratation = models.IntegerField()
     subject = models.ForeignKey(Subject, blank=True, null=True)
     teacher = models.ForeignKey(Teacher, blank=True, null=True)
 
